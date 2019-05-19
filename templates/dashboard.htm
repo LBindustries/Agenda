@@ -1,0 +1,59 @@
+{% extends "stampo.htm" %}
+{% block title %}Agenda - Dashboard{% endblock %}
+{% block extrahead %}
+<script type="text/javascript">
+    function tasksubmit() {
+        var xhr = new XMLHttpRequest();
+        var impegno = document.getElementById("impegno").value;
+        var nota = document.getElementById("note").value;
+        xhr.addEventListener("readystatechange", function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById("impegno").value = "";
+                document.getElementById("note").value = "";
+                taskgather();
+            }
+        });
+        xhr.open("POST", "/api/newtask", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        var parametri = "impegno=" + impegno +"&nota="+nota;
+        xhr.send(parametri);
+    }
+    function taskgather() {
+        var xhr = new XMLHttpRequest();
+            document.getElementById("tasks").innerHTML = ""
+            xhr.addEventListener("readystatechange", function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("tasks").innerHTML = xhr.responseText;
+                }
+            });
+            xhr.open("GET", "/api/gatherer", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send();
+    }
+
+    window.onload = taskgather;
+
+</script>
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-3">Benvenuto nella tua agenda!</h1>
+    <p class="lead">Da qui puoi consultare i tuoi impegni e crearne di nuovi.</p>
+</div>
+<div class="row">
+    <div class="col-md-6" id="tasks">
+        Metti gli impegni qui
+    </div>
+    <div class="col-md-6">
+        <div class="alert alert-success" role="alert">
+            Crea un nuovo impegno<br>
+            <label for="impegno" class="col-form-label">Data e ora</label>
+            <input type="datetime-local" class="form-control" id="impegno" placeholder="DD/MM/AAAA HH:MM"
+                   name="impegno"><br>
+            <label for="note" class="col-form-label">Note</label>
+            <input type="text" class="form-control" id="note" placeholder="Intervallo" name="note"><br>
+            <button type="button" class="btn btn-outline-success" onclick="tasksubmit()">Salva</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

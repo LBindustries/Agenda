@@ -1,0 +1,32 @@
+{% extends "stampo.htm" %}
+{% block title %}Registrazione - Agenda{% endblock %}
+{% block content %}
+    <form action="/register" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="username" class="col-form-label">Email</label>
+                <input type="email" class="form-control" id="username" placeholder="Email" name="username">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="password" class="col-form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="usernameTelegram" class="col-form-label">Username di Telegram</label>
+                <input type="text" class="form-control" id="usernameTelegram" placeholder="@iltuousername"
+                       name="usernameTelegram">
+                <small id="emailHelp" class="form-text text-muted">Non hai telegram? Scaricalo per <a
+                        href="https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=it">Android</a>,
+                    <a href="https://itunes.apple.com/it/app/telegram-messenger/id686449807?mt=8">iOS</a> o usalo dal
+                    tuo <a href="https://web.telegram.org/">PC</a>.
+                </small>
+            </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Registrati</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
